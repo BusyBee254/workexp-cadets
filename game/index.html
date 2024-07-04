@@ -42,10 +42,10 @@
 }">
     <div class="text-9xl font-extrabold text-center text-orange-950" x-html="score"></div>
     <template x-for="i in trees">
-        <img src="/images/tree.png"  class="absolute max-h-[10vh] max-w-[10vw]" :style="{ top: Math.random() * 90  + '%', left: Math.random() * 90 + '%' }"/>
+        <img src="/workexp-cadets/images/tree.png"  class="absolute max-h-[10vh] max-w-[10vw]" :style="{ top: Math.random() * 90  + '%', left: Math.random() * 90 + '%' }"/>
     </template>
     <template x-for="i in [...Array(1).keys()]">
         <a href="#" x-on:click="        score = score + 1;         trees = [...trees, ...Array(10).keys()]; cadetPos.x = Math.random();  cadetPos.y = Math.random();
-        " :style="{ top: cadetPos.x * 90  + '%', left: cadetPos.y * 90 + '%' }" class="absolute max-h-[10vh] max-w-[10vw] block"><img src="/images/tree-cadet.png" class="max-h-[10vh] max-w-[10vw]"/></a>
+        " :style="{ top: cadetPos.x * 90  + '%', left: cadetPos.y * 90 + '%' }" class="absolute max-h-[10vh] max-w-[10vw] block"><img src="/workexp-cadets/images/tree-cadet.png" class="max-h-[10vh] max-w-[10vw]"/></a>
     </template>
 </div>
