@@ -1,4 +1,3 @@
-
 <link
         href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap"
         rel="stylesheet"/>
@@ -11,6 +10,8 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <script src="//unpkg.com/alpinejs" defer></script>
+
+
 
 
 <script>
@@ -33,19 +34,79 @@
 </script>
 
 <div class="w-full h-full bg-green-400" x-data="{
+    started: false,
+    died: false,
+    timeout: null,
     score: 0,
-    trees: [...Array(10).keys()],
+    trees: [],
     cadetPos: {
      x: Math.random(),
      y: Math.random()
+    },
+    tree() {
+        return {x: Math.random() * 90, y: Math.random() * 85};
+    },
+    gameover() {
+        this.died = true;
+    },
+    shoot() {
+        $refs.gun.currentTime = 0;
+        $refs.gun.play();
+        this.score = this.score + 1;
+        this.cadetPos.x = Math.random(); 
+        this.cadetPos.y = Math.random();
+        clearTimeout(this.timeout);
+        this.start();
+    },
+    start() {
+        this.started = true;
+        this.died = false;
+        this.trees = [];
+        for (var i = 0; i < (10 * (this.score + 1)); i++) {
+            this.trees.push(this.tree());
+        }
+        this.timeout = setTimeout(() => {   
+            this.gameover()
+        }, 4000)
+    },  
+    restart() {
+        this.score = 0;
+                this.start();
     }
-}">
-    <div class="text-9xl font-extrabold text-center text-orange-950" x-html="score"></div>
+
+}"
+>
+
+    <div class="relative text-9xl font-extrabold text-center text-red-800 z-50 animate-pulse" x-html="score"></div>
     <template x-for="i in trees">
-        <img src="/workexp-cadets/images/tree.png"  class="absolute max-h-[10vh] max-w-[10vw]" :style="{ top: Math.random() * 90  + '%', left: Math.random() * 90 + '%' }"/>
+        <img src="/workexp-cadets/images/tree.png" class="absolute max-h-[36vh] z-1 max-w-[10vw] " :style="{ top: i.y + '%', left: i.x + '%' }"/>
     </template>
     <template x-for="i in [...Array(1).keys()]">
-        <a href="#" x-on:click="        score = score + 1;         trees = [...trees, ...Array(10).keys()]; cadetPos.x = Math.random();  cadetPos.y = Math.random();
-        " :style="{ top: cadetPos.x * 90  + '%', left: cadetPos.y * 90 + '%' }" class="absolute max-h-[10vh] max-w-[10vw] block"><img src="/workexp-cadets/images/tree-cadet.png" class="max-h-[10vh] max-w-[10vw]"/></a>
+        <a href="#" x-on:click="shoot" :style="{ top: cadetPos.x * 85 + '%', left: cadetPos.y * 90 + '%' }" class="z-1 absolute max-h-[36vh] max-w-[10vw] block"><img src="/workexp-cadets/images/tree-cadet.png" class="max-h-[36vh] max-w-[10vw]"/></a>
     </template>
+    <audio x-ref="gun">
+        <source src="/workexp-cadets/game/gun.mp3" type="audio/mp3" />
+    </audio>
+    <div x-show="!started" class="absolute top-0 left-0 flex flex-row min-h-screen w-full justify-center items-center bg-black  bg-opacity-50">
+        <div class=" bg-green-950 p-4 text-center text-black font-bold">
+            <p class="text-5xl">SPOT THE ENEMY</p>
+            <button class="text-2xl" x-on:click="start">Start Game</button>
+            <p>Created by: Oliver baker</p>
+            <P>RULES: CLICK THE ENEMY AS FAST AS YOU CAN, FAIL TO FIND HIM WHITHIN FOUR SECONDS AND YOU WILL BE SHOT</P>
+        </div>
+    </div>
+    <div x-cloak  x-show="died"class="absolute top-0 left-0 flex flex-row min-h-screen w-full justify-center items-center bg-black  bg-opacity-50">
+        <div class="bg-red-800 p-4 text-center text-black font-bold animate-pulse">
+            <p class="text-5xl">GAME OVER!</p>
+            <P class="text-5xl">THE ENEMY FOUND YOU FIRST!</P>
+            <p x-gameover="score"></p>
+            <button class="text-2xl" x-on:click="restart">Restart Game</button>
+            <p>Created by: Oliver baker</p>
+            <P>RULES: CLICK THE ENEMY AS FAST AS YOU CAN, FAIL TO FIND HIM WHITHIN FIVE SECONDS AND YOU DIE</P>
+        </div>
+    </div>
+
+
+
 </div>
+
