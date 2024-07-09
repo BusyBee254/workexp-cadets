@@ -67,7 +67,7 @@
         }
         this.timeout = setTimeout(() => {   
             this.gameover()
-        }, 7000)
+        }, 5000)
     },  
     restart() {
         this.score = 0;
@@ -76,7 +76,9 @@
 
 }"
 >
-
+    <div class="bg-cover bg-center h-screen">
+            style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMC3kSTXJnB1fiufMheGNIgcZJQVI8dYjLn5WvYu8TT9QbJUAu:https://www.thespruce.com/thmb/uVF9PLlxMDzzB7LRoap4dQUEvBY%3D/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/SPR-buffalo-grass-7105718-01-09ac53b4a090468593fd4f80dc5eeb7c.jpg&s');"/>
+    </div>
     <div class="relative text-9xl font-extrabold text-center text-red-800 z-50 animate-pulse  pointer-events-none" x-html="score"></div>
     <template x-for="i in trees">
         <img src="/workexp-cadets/images/tree.png" class="absolute max-h-[36vh] z-1 max-w-[10vw] " :style="{ top: i.y + '%', left: i.x + '%' }"/>
@@ -92,7 +94,7 @@
             <p class="text-5xl">SPOT THE ENEMY</p>
             <button class="text-2xl" x-on:click="start">Start Game</button>
             <p>Created by: Oliver baker</p>
-            <P>RULES: CLICK THE ENEMY AS FAST AS YOU CAN, FAIL TO FIND HIM WHITHIN FOUR SECONDS AND YOU WILL BE SHOT</P>
+            <P>RULES: CLICK THE ENEMY AS FAST AS YOU CAN, FAIL TO FIND HIM WHITHIN FIVE SECONDS AND YOU WILL BE SHOT</P>
         </div>
     </div>
     <div x-cloak  x-show="died"class="absolute top-0 left-0 flex flex-row min-h-screen w-full justify-center items-center bg-black  bg-opacity-50">
@@ -102,7 +104,7 @@
             <p x-gameover="score"></p>
             <button class="text-2xl" x-on:click="restart">Restart Game</button>
             <p>Created by: Oliver baker</p>
-            <P>RULES: CLICK THE ENEMY AS FAST AS YOU CAN, FAIL TO FIND HIM WHITHIN SEVEN SECONDS AND YOU DIE</P>
+            <P>RULES: CLICK THE ENEMY AS FAST AS YOU CAN, FAIL TO FIND HIM WHITHIN FIVE SECONDS AND YOU DIE</P>
         </div>
     </div>
 
